@@ -1,4 +1,3 @@
-/* App.css */
 /* General styles */
 body {
   font-family: Arial, sans-serif;
@@ -15,16 +14,13 @@ h2 {
 
 .container {
   display: flex;
+  flex-wrap: wrap;
 }
 
-.form-container {
+.form-container, .table-container {
   flex: 1;
   padding: 20px;
-}
-
-.table-container {
-  flex: 2;
-  padding: 20px;
+  box-sizing: border-box;
 }
 
 form {
@@ -96,4 +92,30 @@ button.delete:hover {
 
 button.save:hover {
   background-color: #0056b3;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .form-container, .table-container {
+    flex: none;
+    width: 100%;
+    padding: 10px;
+  }
+
+  form input, form button {
+    width: 100%;
+  }
+
+  th, td {
+    padding: 5px;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
 }
