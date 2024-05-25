@@ -31,21 +31,22 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newBook), // Use newBook state for the request body
+        body: JSON.stringify(newBook),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-        setBooks([...books, data]); // Add the new book to the state
+        setBooks([...books, data.book]); // Add the new book to the state
         setNewBook({ title: '', author: '', publishedDate: '' }); // Clear the input fields
       } else {
-        console.error('Error adding book:', response.status);
+        const errorData = await response.json();
+        console.error('Error adding book:', errorData.message);
       }
     } catch (error) {
       console.error('Error adding book:', error);
     }
   };
-  
+
   const handleEdit = (book) => {
     setEditingBook(book);
   };
