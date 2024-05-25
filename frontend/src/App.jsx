@@ -31,9 +31,9 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newBook),
+        body: JSON.stringify(newBook), // Use newBook state for the request body
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         setBooks([...books, data]); // Add the new book to the state
@@ -45,7 +45,7 @@ function App() {
       console.error('Error adding book:', error);
     }
   };
-
+  
   const handleEdit = (book) => {
     setEditingBook(book);
   };
@@ -95,7 +95,6 @@ function App() {
         <h2>ADD BOOKS</h2>
         <form onSubmit={handleSubmit}>
           <input
-            key="title"
             type="text"
             name="title"
             value={newBook.title}
@@ -104,7 +103,6 @@ function App() {
             required
           />
           <input
-            key="author"
             type="text"
             name="author"
             value={newBook.author}
@@ -113,7 +111,6 @@ function App() {
             required
           />
           <input
-            key="publishedDate"
             type="date"
             name="publishedDate"
             value={newBook.publishedDate}
@@ -127,7 +124,7 @@ function App() {
       <table>
         <thead>
           <tr>
-            <th>id</th>
+            <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Published Date</th>
@@ -160,7 +157,7 @@ function App() {
                   book.author
                 )}
               </td>
-              <td>{book.publishedDate}</td>
+              <td>{new Date(book.publishedDate).toLocaleDateString()}</td>
               <td>
                 {editingBook && editingBook._id === book._id ? (
                   <button onClick={() => handleUpdate(editingBook)}>Save</button>

@@ -22,11 +22,11 @@ router.post('/', async (req,res)=>{
   try{
     //validate request body
     if(!req.body.title || !req.body.author || !req.body.publishedDate){
-      return res.status(400).json({message:'title, author and published date are required'})
+      return res.status(400).json({message:'Title, author and published date are required'})
     }
 
     //check if the book's title already exists
-    const existingTitle = await Book.findOne({name: req.body.title});
+    const existingTitle = await Book.findOne({title: req.body.title});
     if(!existingTitle){
       return res.status(400).json({message:'Book title is already exists'})
     }
@@ -36,7 +36,7 @@ router.post('/', async (req,res)=>{
 
     res
       .status(200)
-      .json({message: 'Author created successfully', book:newBook});
+      .json({message: 'Author created successfully', AddedBook:newBook});
   }catch(err){
     res.status(500).json({message: err.message});
   }
