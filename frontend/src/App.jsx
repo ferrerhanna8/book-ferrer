@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -91,8 +92,8 @@ function App() {
   };
 
   return (
-    <div>
-      <div>
+    <div className="container">
+      <div className="form-container">
         <h2>ADD BOOKS</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -116,63 +117,74 @@ function App() {
             name="publishedDate"
             value={newBook.publishedDate}
             onChange={handleInputChange}
-            placeholder="Published Date"
             required
           />
           <button type="submit">Submit</button>
         </form>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Published Date</th>
-            <th>Operations</th>
-          </tr>
-        </thead>
-        <tbody>
-          {books.map((book) => (
-            <tr key={book._id}>
-              <td>{book._id}</td>
-              <td>
-                {editingBook && editingBook._id === book._id ? (
-                  <input
-                    type="text"
-                    value={editingBook.title}
-                    onChange={(e) => setEditingBook({ ...editingBook, title: e.target.value })}
-                  />
-                ) : (
-                  book.title
-                )}
-              </td>
-              <td>
-                {editingBook && editingBook._id === book._id ? (
-                  <input
-                    type="text"
-                    value={editingBook.author}
-                    onChange={(e) => setEditingBook({ ...editingBook, author: e.target.value })}
-                  />
-                ) : (
-                  book.author
-                )}
-              </td>
-              <td>{new Date(book.publishedDate).toLocaleDateString()}</td>
-              <td>
-                {editingBook && editingBook._id === book._id ? (
-                  <button onClick={() => handleUpdate(editingBook)}>Save</button>
-                ) : (
-                  <>
-                    <button onClick={() => handleEdit(book)}>Edit</button>
-                    <button onClick={() => handleDelete(book._id)}>Delete</button>
-                  </>
-                )}
-              </td>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Published Date</th>
+              <th>Operations</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {books.map((book) => (
+              <tr key={book._id}>
+                <td>{book._id}</td>
+                <td>
+                  {editingBook && editingBook._id === book._id ? (
+                    <input
+                      type="text"
+                      value={editingBook.title}
+                      onChange={(e) => setEditingBook({ ...editingBook, title: e.target.value })}
+                    />
+                  ) : (
+                    book.title
+                  )}
+                </td>
+                <td>
+                  {editingBook && editingBook._id === book._id ? (
+                    <input
+                      type="text"
+                      value={editingBook.author}
+                      onChange={(e) => setEditingBook({ ...editingBook, author: e.target.value })}
+                    />
+                  ) : (
+                    book.author
+                  )}
+                </td>
+                <td>
+                  {editingBook && editingBook._id === book._id ? (
+                    <input
+                      type="date"
+                      value={editingBook.publishedDate.split('T')[0]} // Handle date format
+                      onChange={(e) => setEditingBook({ ...editingBook, publishedDate: e.target.value })}
+                    />
+                  ) : (
+                    new Date(book.publishedDate).toLocaleDateString()
+                  )}
+                </td>
+                <td>
+                  {editingBook && editingBook._id === book._id ? (
+                    <button className="save" onClick={() => handleUpdate(editingBook)}>Save</button>
+                  ) : (
+                    <>
+                      <button className="edit" onClick={() => handleEdit(book)}>Edit</button>
+                      <button className="delete" onClick={() => handleDelete(book._id)}>Delete</button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
