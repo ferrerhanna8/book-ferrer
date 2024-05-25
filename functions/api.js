@@ -17,11 +17,11 @@ mongoose
   .catch((error)=>console.error('Failed to connect to BookDB'));
 
 app.use('/.netlify/functions/api', router);
-// module.exports.handler = serverless(app);
+module.exports.handler = serverless(app);
 
 // app.use('/',(req,res)=>[
 //   res.json({message: 'Hello world'})
 // ])
-app.listen(5030,()=>{
-  console.log('Server is running on port 5030')
-})
+// app.listen(5030,()=>{
+//   console.log('Server is running on port 5030')
+// })
